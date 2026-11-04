@@ -1586,8 +1586,8 @@ footer {
 
         <div class="email-box">
           <small>BUSINESS & PROJECT INQUIRIES</small>
-          <a href="mailto:sales@lipsynclabs.com">
-            sales@lipsynclabs.com
+          <a href="mailto:hello@lipsynclabs.com">
+            hello@lipsynclabs.com
           </a>
         </div>
 
@@ -1678,10 +1678,10 @@ footer {
             </button>
 
             <p class="form-note">
-              Submitting opens your email application with your
-              project details addressed to our sales team.
-              Your email application must be configured to send it.
+              Your project inquiry will be sent securely to our sales team.
+              We’ll get back to you as soon as possible.
             </p>
+            <p id="formStatus" class="form-note" role="status" aria-live="polite" style="display:none; margin-top:12px;"></p>
 
           </div>
 
@@ -1727,8 +1727,8 @@ footer {
 
       <span>© 2026 LipSync Labs. All Rights Reserved.</span>
 
-      <a href="mailto:sales@lipsynclabs.com">
-        sales@lipsynclabs.com
+      <a href="mailto:hello@lipsynclabs.com">
+        hello@lipsynclabs.com
       </a>
 
     </div>
@@ -1786,49 +1786,61 @@ slider.addEventListener('input', () => {
 });
 
 
-// PROJECT INQUIRY FORM
+// PROJECT INQUIRY FORM - FORMSUBMIT
+// Sends inquiries directly to hello@lipsynclabs.com.
 
-document.getElementById('projectForm')
-  .addEventListener('submit', function(e) {
+const projectForm = document.getElementById('projectForm');
+const formStatus = document.getElementById('formStatus');
+const submitButton = projectForm.querySelector('button[type="submit"]');
 
-    e.preventDefault();
+projectForm.addEventListener('submit', async function(e) {
+  e.preventDefault();
 
-    if (!this.reportValidity()) return;
+  if (!this.reportValidity()) return;
 
-    const data = new FormData(this);
+  const originalButtonText = submitButton.textContent;
+  const formData = new FormData(this);
+  const payload = Object.fromEntries(formData.entries());
 
-    const subject = encodeURIComponent(
-      'New Project Inquiry - LipSync Labs'
-    );
+  payload._subject = 'New Project Inquiry - LipSync Labs';
+  payload._template = 'table';
+  payload._replyto = formData.get('email');
+  payload._honey = ''; // FormSubmit honeypot spam protection
 
-    const body = encodeURIComponent(
-`NEW PROJECT INQUIRY
-====================
+  submitButton.disabled = true;
+  submitButton.textContent = 'Sending Inquiry...';
+  formStatus.style.display = 'block';
+  formStatus.textContent = 'Sending your project inquiry. Please wait...';
+  formStatus.style.color = 'inherit';
 
-Full Name: ${data.get('name')}
-Company: ${data.get('company')}
-Email: ${data.get('email')}
+  try {
+    const response = await fetch('https://formsubmit.co/ajax/hello@lipsynclabs.com', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
 
-Project Type: ${data.get('type')}
-Source Language: ${data.get('source')}
-Target Languages: ${data.get('target')}
+    const result = await response.json();
 
-Video Resolution: ${data.get('resolution')}
-Video Duration: ${data.get('duration')}
+    if (!response.ok || result.success !== 'true' && result.success !== true) {
+      throw new Error(result.message || 'Your inquiry could not be sent. Please try again.');
+    }
 
-Project Details:
-${data.get('details')}
-
-====================
-LipSync Labs Website Inquiry`
-    );
-
-    const mailto =
-      `mailto:sales@lipsynclabs.com?subject=${subject}&body=${body}`;
-
-    window.location.href = mailto;
-
-  });
+    formStatus.textContent = 'Thank you! Your project inquiry has been sent successfully. Our team will contact you soon.';
+    formStatus.style.color = '#39c98a';
+    projectForm.reset();
+  } catch (error) {
+    console.error('Project inquiry submission failed:', error);
+    formStatus.textContent = 'Sorry, we could not send your inquiry right now. Please email hello@lipsynclabs.com directly.';
+    formStatus.style.color = '#ff7777';
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = originalButtonText;
+  }
+});
 
 </script>
 
