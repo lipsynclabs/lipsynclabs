@@ -1601,15 +1601,14 @@ footer {
 
       <!-- PROJECT FORM -->
 
-      <form class="contact-form reveal"
-        id="projectForm"
-        action="https://formsubmit.co/hello@lipsynclabs.com"
+      <form class="contact-form reveal" id="projectForm"
+        action="https://formspree.io/f/mdeeyjoy"
         method="POST">
 
         <input type="hidden" name="_subject" value="New Project Inquiry - LipSync Labs">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_captcha" value="true">
-        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"
+               aria-hidden="true"
+               style="position:absolute;left:-9999px;width:1px;height:1px;">
 
         <div class="form-grid">
 
@@ -1686,7 +1685,7 @@ footer {
             </button>
 
             <p class="form-note">
-              Your project inquiry will be sent securely to our sales team.
+              Your project inquiry will be sent securely to our team.
               We’ll get back to you as soon as possible.
             </p>
             <p id="formStatus" class="form-note" role="status" aria-live="polite" style="display:none; margin-top:12px;"></p>
@@ -1794,9 +1793,67 @@ slider.addEventListener('input', () => {
 });
 
 
-// PROJECT INQUIRY FORM
-// Uses a standard HTML POST to FormSubmit (no fetch/AJAX), avoiding browser CORS
-// and Failed to fetch errors. FormSubmit will show its own confirmation page.
+// PROJECT INQUIRY FORM - FORMSPREE AJAX
+// Submits in the background and keeps visitors on lipsynclabs.com.
+// The success and error messages below are custom website messages.
+
+const projectForm = document.getElementById('projectForm');
+const formStatus = document.getElementById('formStatus');
+const submitButton = projectForm.querySelector('button[type="submit"]');
+
+projectForm.addEventListener('submit', async function (event) {
+  event.preventDefault();
+
+  if (!projectForm.reportValidity()) return;
+
+  const originalButtonText = submitButton.textContent.trim();
+
+  submitButton.disabled = true;
+  submitButton.textContent = 'Sending Inquiry...';
+  formStatus.style.display = 'block';
+  formStatus.textContent = 'Sending your project inquiry. Please wait...';
+  formStatus.style.color = 'inherit';
+
+  try {
+    const response = await fetch(projectForm.action, {
+      method: 'POST',
+      body: new FormData(projectForm),
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    let result = {};
+    try {
+      result = await response.json();
+    } catch (_) {
+      // Leave result empty; the response status below will handle the error.
+    }
+
+    if (!response.ok) {
+      const firstError = result.errors && result.errors.length
+        ? result.errors.map(error => error.message).join(' ')
+        : '';
+      throw new Error(firstError || 'We could not send your inquiry. Please try again.');
+    }
+
+    formStatus.textContent =
+      'Thank you! Your project inquiry has been sent successfully. Our team will contact you soon.';
+    formStatus.style.color = '#39c98a';
+    projectForm.reset();
+
+  } catch (error) {
+    console.error('Project inquiry submission failed:', error);
+    formStatus.textContent =
+      'Sorry, we could not send your inquiry right now. Please try again in a moment or email hello@lipsynclabs.com directly.';
+    formStatus.style.color = '#ff7777';
+
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = originalButtonText;
+  }
+});
+
 
 </script>
 
