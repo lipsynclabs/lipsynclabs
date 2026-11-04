@@ -1805,7 +1805,8 @@ projectForm.addEventListener('submit', async function(e) {
   payload._subject = 'New Project Inquiry - LipSync Labs';
   payload._template = 'table';
   payload._replyto = formData.get('email');
-  payload._honey = ''; // FormSubmit honeypot spam protection
+  payload._url = window.location.href; // Helps FormSubmit identify the live page URL.
+  payload._honey = ''; // Keep empty; a filled honeypot is treated as spam.
 
   submitButton.disabled = true;
   submitButton.textContent = 'Sending Inquiry...';
@@ -1825,8 +1826,10 @@ projectForm.addEventListener('submit', async function(e) {
 
     const result = await response.json();
 
-    if (!response.ok || result.success !== 'true' && result.success !== true) {
-      throw new Error(result.message || 'Your inquiry could not be sent. Please try again.');
+    // FormSubmit may return HTTP 200 even when it rejects a submission.
+    // Check its success value explicitly and show the service's actual message.
+    if (!response.ok || !(result.success === 'true' || result.success === true)) {
+      throw new Error(result.message || 'FormSubmit did not accept the inquiry. Please check email activation and try again.');
     }
 
     formStatus.textContent = 'Thank you! Your project inquiry has been sent successfully. Our team will contact you soon.';
@@ -1834,7 +1837,7 @@ projectForm.addEventListener('submit', async function(e) {
     projectForm.reset();
   } catch (error) {
     console.error('Project inquiry submission failed:', error);
-    formStatus.textContent = 'Sorry, we could not send your inquiry right now. Please email hello@lipsynclabs.com directly.';
+    formStatus.textContent = 'Form submission failed: ' + (error.message || 'Please try again.') + ' If this is your first submission, check hello@lipsynclabs.com (including Spam) for FormSubmit’s activation email. You can also email hello@lipsynclabs.com directly.';
     formStatus.style.color = '#ff7777';
   } finally {
     submitButton.disabled = false;
