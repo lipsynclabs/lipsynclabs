@@ -304,6 +304,15 @@ nav {
   height: 100%;
 }
 
+.hero-face-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  background: #0b0b13;
+}
+
 .floating-chip {
   position: absolute;
   z-index: 3;
@@ -1021,112 +1030,19 @@ footer {
       </div>
 
       <div class="face-card">
-
-        <svg viewBox="0 0 340 410" fill="none"
-             xmlns="http://www.w3.org/2000/svg">
-
-          <defs>
-            <linearGradient id="faceGradient" x1="70" y1="30" x2="290" y2="380">
-              <stop stop-color="#BCA1FF"/>
-              <stop offset=".5" stop-color="#6B67D9"/>
-              <stop offset="1" stop-color="#288FFF"/>
-            </linearGradient>
-
-            <linearGradient id="meshGradient" x1="0" y1="0" x2="1" y2="1">
-              <stop stop-color="#9E65FF"/>
-              <stop offset="1" stop-color="#36B9FF"/>
-            </linearGradient>
-          </defs>
-
-          <!-- Face silhouette -->
-
-          <path d="M112 92
-            Q150 42 222 75
-            Q279 110 267 183
-            L280 210
-            Q292 225 268 237
-            Q265 270 246 287
-            Q231 303 225 326
-            Q194 366 123 338
-            Q77 307 79 225
-            Q75 140 112 92Z"
-            fill="url(#faceGradient)" fill-opacity=".17"
-            stroke="url(#faceGradient)" stroke-width="2"/>
-
-          <!-- Facial outline -->
-
-          <path d="M106 111
-            Q141 62 211 86
-            Q249 104 247 154
-            Q246 182 266 208
-            Q277 225 255 234
-            Q263 245 246 254
-            Q245 277 226 294
-            Q216 317 190 326"
-            stroke="#C5B1FF" stroke-width="2.4"
-            stroke-linecap="round"/>
-
-          <!-- Eye -->
-
-          <path d="M166 170 Q194 153 221 172"
-            stroke="#E1D8FF" stroke-width="3"
-            stroke-linecap="round"/>
-
-          <circle cx="195" cy="170" r="5" fill="#B69AFF"/>
-
-          <!-- Nose -->
-
-          <path d="M235 186 Q224 207 245 214"
-            stroke="#A68EFF" stroke-width="2"
-            stroke-linecap="round"/>
-
-          <!-- Lips -->
-
-          <path d="M246 235 Q264 223 281 238
-                   Q266 252 246 245"
-            fill="#B67AFF"/>
-
-          <path d="M246 238 Q266 243 281 238"
-            stroke="#E9CEFF" stroke-width="1.5"/>
-
-          <!-- Face mesh points -->
-
-          <g stroke="url(#meshGradient)" stroke-opacity=".7"
-             stroke-width="1">
-
-            <path d="M100 122 L145 104 L190 122 L220 148"/>
-            <path d="M82 177 L124 157 L166 170 L195 200"/>
-            <path d="M85 231 L130 214 L175 233 L222 255"/>
-            <path d="M106 281 L147 265 L190 289 L223 294"/>
-            <path d="M145 104 L124 157 L130 214 L147 265"/>
-            <path d="M190 122 L166 170 L175 233 L190 289"/>
-            <path d="M220 148 L195 200 L222 255"/>
-          </g>
-
-          <g fill="#A78BFF">
-            <circle cx="100" cy="122" r="3"/>
-            <circle cx="145" cy="104" r="3"/>
-            <circle cx="190" cy="122" r="3"/>
-            <circle cx="124" cy="157" r="3"/>
-            <circle cx="166" cy="170" r="3"/>
-            <circle cx="130" cy="214" r="3"/>
-            <circle cx="175" cy="233" r="3"/>
-            <circle cx="147" cy="265" r="3"/>
-            <circle cx="190" cy="289" r="3"/>
-          </g>
-
-          <!-- Speech waves -->
-
-          <g stroke="#A977FF" stroke-width="3" stroke-linecap="round">
-            <path d="M293 221 V250"/>
-            <path d="M306 209 V261"/>
-            <path d="M319 219 V250"/>
-          </g>
-
-          <circle cx="299" cy="275" r="3" fill="#3F9BFF"/>
-
-        </svg>
-
+        <video
+          class="hero-face-video"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          aria-label="AI lip synchronization demonstration video"
+          poster=""
+        >
+          <source src="https://github.com/lipsynclabs/lipsynclabs/blob/main/video_lipsync.mp4" type="video/mp4">
+          Your browser does not support HTML5 video.
+        </video>
       </div>
 
       <div class="floating-chip chip-two">
