@@ -1615,13 +1615,13 @@ footer {
           <div class="form-group">
             <label for="name">FULL NAME *</label>
             <input id="name" name="name"
-              type="text" placeholder="Your name" required>
+              type="text" placeholder="Your full name" required>
           </div>
 
           <div class="form-group">
             <label for="company">COMPANY NAME</label>
             <input id="company" name="company"
-              type="text" placeholder="Your company">
+              type="text" placeholder="Your company (optional)">
           </div>
 
           <div class="form-group">
@@ -1631,50 +1631,23 @@ footer {
           </div>
 
           <div class="form-group">
-            <label for="type">PROJECT TYPE *</label>
-            <select id="type" name="type" required>
-              <option value="">Select project type</option>
-              <option>AI Lip Synchronization</option>
-              <option>Multilingual Dubbing</option>
-              <option>4K UHD Lip Sync</option>
-              <option>Advertisement Localization</option>
-              <option>Film & Entertainment</option>
-              <option>Other</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="source">SOURCE LANGUAGE</label>
-            <input id="source" name="source"
-              type="text" placeholder="e.g. English">
-          </div>
-
-          <div class="form-group">
-            <label for="target">TARGET LANGUAGE(S) *</label>
-            <input id="target" name="target"
-              type="text" placeholder="e.g. Hindi, Spanish" required>
-          </div>
-
-          <div class="form-group">
-            <label for="resolution">VIDEO RESOLUTION</label>
-            <select id="resolution" name="resolution">
-              <option>4K Ultra HD</option>
-              <option>1080p Full HD</option>
-              <option>Other / Not sure</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="duration">VIDEO DURATION</label>
-            <input id="duration" name="duration"
-              type="text" placeholder="e.g. 5 minutes">
+            <label for="phone">PHONE NUMBER *</label>
+            <input id="phone" name="phone"
+              type="tel" placeholder="Your phone number"
+              autocomplete="tel" required>
           </div>
 
           <div class="form-group full">
-            <label for="details">TELL US ABOUT YOUR PROJECT *</label>
+            <label for="duration">VIDEO DURATION *</label>
+            <input id="duration" name="duration"
+              type="text" placeholder="e.g. 5 minutes, 30 minutes, 2 hours"
+              required>
+          </div>
+
+          <div class="form-group full">
+            <label for="details">TELL US ABOUT YOUR PROJECT (OPTIONAL)</label>
             <textarea id="details" name="details"
-              placeholder="Describe your video, requirements and expected output..."
-              required></textarea>
+              placeholder="Share any additional details about your project (optional)..."></textarea>
           </div>
 
           <div class="form-group full" style="margin-bottom:0;">
