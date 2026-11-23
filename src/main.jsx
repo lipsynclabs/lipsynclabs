@@ -1,7 +1,11 @@
+
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+
 import Topography from './Topography.jsx';
+
 import './Topography.css';
+import './site-overrides.css';
 
 function Background() {
   return (
@@ -40,4 +44,7 @@ function Background() {
 }
 
 const mount = document.getElementById('topography-root');
-if (mount) createRoot(mount).render(<Background />);
+
+if (mount) {
+  createRoot(mount).render(<Background />);
+}
