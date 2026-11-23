@@ -1,0 +1,265 @@
+/* Animated Topography is the only page-wide background layer. */
+html, body {
+  min-height: 100%;
+  background: #08080c;
+}
+
+body {
+  position: relative;
+  isolation: isolate;
+}
+
+#topography-root {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: #08080c;
+}
+
+#topography-root .topography-container,
+#topography-root canvas {
+  width: 100%;
+  height: 100%;
+}
+
+/* Keep the content above the animated background. */
+body > *:not(#topography-root) {
+  position: relative;
+  z-index: 1;
+}
+
+body > nav {
+  position: fixed;
+  z-index: 1000;
+}
+
+/* Remove broad decorative gradients that competed with the topographic field.
+   Card and component surfaces remain for legibility. */
+.hero,
+.quality,
+.languages {
+  background: transparent !important;
+}
+
+.cta {
+  background: rgba(16, 16, 24, 0.78) !important;
+  backdrop-filter: blur(10px);
+}
+
+/* Slightly soften the fixed navigation while allowing the background to show through. */
+nav {
+  background: rgba(8, 8, 12, 0.72) !important;
+}
+
+
+/* ---------------------------------------------------------
+   READABILITY UPDATE
+   Larger supporting text, stronger contrast and brighter
+   white typography while preserving the existing headlines.
+   --------------------------------------------------------- */
+
+:root {
+  --muted: #e2e4ee !important;
+}
+
+/* Main explanatory copy */
+.section-description,
+.hero-description,
+.cta p,
+.contact-info p,
+.service-card p,
+.process-card p,
+.footer-description {
+  color: #f0f1f7 !important;
+  font-size: clamp(16px, 1.15vw, 18px) !important;
+  line-height: 1.8 !important;
+  font-weight: 500 !important;
+}
+
+/* Hero supporting copy: make it especially easy to read */
+.hero-description {
+  font-size: clamp(17px, 1.25vw, 19px) !important;
+  max-width: 560px !important;
+  color: #ffffff !important;
+}
+
+/* Navigation and action buttons */
+.nav-links a {
+  color: #f2f3f8 !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+}
+
+.btn,
+.hero-actions .btn {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+}
+
+/* Small labels, tags and trust-strip text */
+.section-label,
+.hero-tag,
+.hero-note,
+.trust-item,
+.chip-title,
+.chip-sub,
+.compare-label,
+.form-group label,
+.form-note,
+.email-box small,
+.footer-links a,
+.footer-bottom {
+  color: #f0f1f7 !important;
+  font-size: 13px !important;
+  line-height: 1.65 !important;
+  font-weight: 500 !important;
+}
+
+.hero-tag {
+  font-size: 13.5px !important;
+}
+
+.hero-note {
+  font-size: 13.5px !important;
+}
+
+.trust-item {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+
+.chip-title {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}
+
+.chip-sub {
+  font-size: 13px !important;
+}
+
+/* Service and process cards */
+.service-card h3,
+.process-card h3 {
+  font-size: 19px !important;
+  line-height: 1.4 !important;
+}
+
+.service-card p,
+.process-card p {
+  font-size: 15px !important;
+}
+
+/* Feature list and comparison labels */
+.quality-point {
+  color: #f2f3f8 !important;
+  font-size: 15px !important;
+  line-height: 1.65 !important;
+}
+
+.compare-label {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+}
+
+/* Language and industry labels */
+.language-pill,
+.industry {
+  color: #f4f5fa !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+}
+
+/* Contact details and form controls */
+.email-box small {
+  font-size: 13px !important;
+}
+
+.email-box a {
+  color: #e4d8ff !important;
+  font-size: 17px !important;
+}
+
+.form-group label {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  color: #ffffff !important;
+  font-size: 15px !important;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #c9cbd6 !important;
+  opacity: 1 !important;
+}
+
+.form-note {
+  font-size: 13px !important;
+}
+
+/* Footer copy and links */
+.footer-description,
+.footer-links a,
+.footer-bottom {
+  color: #e5e6ef !important;
+  font-size: 14px !important;
+}
+
+/* Preserve the large headline hierarchy and improve body readability on mobile. */
+@media (max-width: 600px) {
+  .hero-description,
+  .section-description,
+  .cta p,
+  .contact-info p,
+  .service-card p,
+  .process-card p {
+    font-size: 16px !important;
+    line-height: 1.75 !important;
+  }
+
+  .nav-links a,
+  .language-pill,
+  .industry,
+  .quality-point {
+    font-size: 14px !important;
+  }
+
+  .trust-item {
+    font-size: 13px !important;
+  }
+
+  .footer-description,
+  .footer-links a,
+  .footer-bottom {
+    font-size: 13px !important;
+  }
+}
+
+
+/* Local SVG flag assets: consistent rendering across Windows/Chrome */
+.language-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  white-space: nowrap !important;
+}
+
+.language-flag {
+  display: inline-block !important;
+  width: 24px !important;
+  height: 16px !important;
+  min-width: 24px !important;
+  object-fit: cover !important;
+  border-radius: 2px !important;
+  vertical-align: middle !important;
+  flex: 0 0 24px !important;
+}
